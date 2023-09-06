@@ -1,0 +1,19 @@
+.header-md:after{
+    background: none !important;
+}
+
+ion-content{
+    --background:#fff !important;
+}
+
+.app-logo{
+    text-align: center;
+    img{
+        height: 200px;
+        width: 200px;
+    }
+}
+
+ion-button{
+    border-radius: 5px;
+}

@@ -1,0 +1,71 @@
+input {
+    background-color: white;
+    color: #331212;
+    border-radius: 6px;
+
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+select {
+    background-color: white;
+    color: #331212;
+    border-radius: 6px;
+}
+
+option {
+    background-color: white;
+    color: #331212;
+    border-radius: 6px;
+}
+
+p {
+    margin: 1em;
+}
+
+//
+
+
+.bkn {
+    background-color: #fff;
+    padding: 12px;
+}
+
+.reload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.card {
+    width: 100%
+}
+
+.label_status {
+    position: absolute;
+    right: 0px;
+    width: 100px;
+    padding: 10px;
+}
+
+.client {
+    margin-top: -10px;
+}
+
+.products {
+    margin-top: -10px;
+}
+
+.products-index {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background-color: gainsboro;
+}
+
+.products-details {
+    margin-left: 10px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,93 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="secondary">
+      Principal
+    </ion-title>
+    <ion-toggle slot="end" [(ngModel)]="isOpen" (click)="changeStatus()"></ion-toggle>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="secondary">
+      Principal
+    </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Seleccion de bandas.</h1>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="matrix">
+          <div class="row" *ngFor="let row of getRowNumbers(); let i = index">
+            <ion-button
+              class="cell"
+              *ngFor="let col of getColNumbers(); let j = index"
+              [ngClass]="getCellPosition(i + 1, j + 1)"
+              (click)="navigateToScanner(getCellPosition(i + 1, j + 1))"
+            >
+              {{ getCellPosition(i + 1, j + 1) }}
+            </ion-button>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col size="6">
+        <ion-card routerLink="/products">
+          <ion-card-content>
+            <ion-icon name="basket-outline"></ion-icon>
+            <h3>Administrar productos</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card routerLink="/category">
+          <ion-card-content>
+            <ion-icon name="albums-outline"></ion-icon>
+            <h3>Administrar categorias</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card routerLink="/orders">
+          <ion-card-content>
+            <ion-icon name="cart-outline" color="secondary"></ion-icon>
+            <h3>Administrar ordenes</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card routerLink="/notifications">
+          <ion-card-content>
+            <ion-icon name="notifications-outline" color="secondary" ></ion-icon>
+            <h3>Administrar notificaciones</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card routerLink="/drivers">
+          <ion-card-content>
+            <ion-icon name="car-outline"></ion-icon>
+            <h3>{{"MDRIVER" | translate}}</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card routerLink="/users">
+          <ion-card-content>
+            <ion-icon name="person-outline" color="secondary"></ion-icon>
+            <h3>Administrar usuarios</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
+  
+</ion-content>

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>{{driver.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>
+        <h3>{{ 'NAME' | translate }}</h3>
+        <p>{{driver.name}}</p>
+      </ion-label>
+      <ion-button slot="end" fill="clear" routerLink="/orders/driver/{{driver.key}}">View Orders</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>{{ 'EMAIL' | translate }}</h3>
+        <p>{{driver.email}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>{{ 'MOBILE' | translate }}</h3>
+        <p>{{driver.mobile}}</p>
+      </ion-label>
+      <ion-button slot="end" (click)="call(driver.mobile)">Call</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">{{ 'PINCODE' | translate }}</ion-label>
+      <ion-textarea [(ngModel)]="driver.pinStr"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button (click)="updatePincode(driver.key,driver.pinStr)">{{'SAVE' | translate}}</ion-button>
+    
+  </div>
+</ion-content>

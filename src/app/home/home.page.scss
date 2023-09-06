@@ -1,0 +1,131 @@
+// #container {
+//   text-align: center;
+
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 50%;
+//   transform: translateY(-50%);
+// }
+
+// #container strong {
+//   font-size: 20px;
+//   line-height: 26px;
+// }
+
+// #container p {
+//   font-size: 16px;
+//   line-height: 22px;
+
+//   color: #8c8c8c;
+
+//   margin: 0;
+// }
+
+// #container a {
+//   text-decoration: none;
+// }
+
+// ion-card-content{
+//   text-align: center;
+//   ion-icon{
+//     font-size: 40px;
+//     color:#331212;
+//   }
+//   h3{
+//     font-size: 16px;
+//     color: #331212;
+//   }
+// }
+
+
+
+input {
+  background-color: white;
+  color: #331212;
+  border-radius: 6px;
+
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+h1{text-align: center;}
+select {
+  background-color: white;
+  color: #331212;
+  border-radius: 6px;
+}
+
+option {
+  background-color: white;
+  color: #331212;
+  border-radius: 6px;
+}
+
+p {
+  margin: 1em;
+}
+.matrix {
+  display: flex;
+  flex-direction: column;
+  overflow-x: scroll; /* Agrega desplazamiento horizontal */
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 100px; /* Ajusta el ancho de las celdas según tu preferencia */
+  height: 100px; /* Ajusta el alto de las celdas según tu preferencia */
+  border: 1px solid #000;
+  border-radius: 5px;
+  text-align: center;
+  margin: 5px; /* Agrega un margen entre las celdas para mejorar la apariencia */
+}
+
+//
+
+
+.bkn {
+  background-color: #fff;
+  padding: 12px;
+}
+
+.reload {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card {
+  width: 100%
+}
+
+.label_status {
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  padding: 10px;
+}
+
+.client {
+  margin-top: -10px;
+}
+
+.products {
+  margin-top: -10px;
+}
+
+.products-index {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  background-color: gainsboro;
+}
+
+.products-details {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}

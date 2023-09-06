@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'DRIVER' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p *ngIf="drivers.length == 0">{{"DRIVERNOFOUND" | translate}}</p>
+  <ion-list *ngIf="drivers.length > 0">
+    <ion-item *ngFor="let driver of drivers">
+      <ion-toggle slot="start" [(ngModel)]="driver.isApproved"
+        (click)="changeDriverStatus(driver.key,driver.isApproved)"></ion-toggle>
+      <ion-label>
+        <h3>{{driver.name}}</h3>
+        <p>{{driver.email}}/ {{driver.mobile}}</p>
+      </ion-label>
+      <ion-button slot="end" (click)="view(driver)" fill="clear">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

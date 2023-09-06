@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Escáner de códigos QR </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Posicion {{ positionTitle }}</h1>
+  <div id="container" *ngIf="isOpen == true" style="margin: 10%;">
+    <ngx-scanner-qrcode #action="scanner" (data)="redirectOrder($event)"></ngx-scanner-qrcode>
+    <button id="scan"(click)="action.toggleCamera()" [disabled]="action.isLoading" [hidden]="true">{{action.isStart ? 'Stop' : 'Start'}}</button>
+  </div>
+  <div *ngIf="isOpen == false" style="margin: 10%;">
+    <p>Para iniciar el escáneo presiona el botón</p>
+    <ion-button (click)="activeCamara()" color="primary" fill="solid" shape="round" size="default">
+      Escánear
+      <ion-icon name="camera-outline" style="margin-left: 5px;"></ion-icon>
+    </ion-button>
+  </div>
+</ion-content>

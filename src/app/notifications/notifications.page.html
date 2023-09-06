@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="secondary">Notificaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<ion-card>
+    <ion-item>
+      <ion-label>
+        {{"MBANNER" | translate}}
+        <form ngNoForm>
+          <input id="avatar" style="display:none" name="file" type="file" (change)="upload()">
+        </form>
+      </ion-label>
+      <ion-button slot="end" (click)="chooseFile()">{{"ADD" | translate}} Banner</ion-button>
+    </ion-item>
+    <ion-row *ngIf="banners.length != 0">
+      <ion-col *ngFor="let b of banners" size="3">
+        <img src="{{b.url}}" style="height:80px;width:auto" />
+        <ion-button size="small" (click)="deleteBanner(b.key)">{{"DELETE" | translate}}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>-->
+
+
+  <ion-card *ngIf="!isShow">
+    <ion-item>
+      <ion-label color="secondary">
+        Administador de notifiaciones
+      </ion-label>
+      <ion-button slot="end" (click)="openEditor()">Agregar nuevo</ion-button>
+    </ion-item>
+    <ion-list *ngIf="notifications.lengh != 0" lines="none">
+      <ion-item *ngFor="let n of notifications">
+        <ion-label color="secondary">
+          <ion-text>
+            <h3>{{n.title}}</h3>
+            <p>{{n.message}}</p>
+          </ion-text>
+        </ion-label>
+        <ion-button slot="end" fill="outline" (click)="delete(n.key)">Eliminar</ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card *ngIf="isShow">
+    <ion-list lines="none">
+      <ion-item>
+        <ion-button (click)="closeEditor()" fill="clear" slot="end">
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-label color="secondary" position="stacked">Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="notification.title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="secondary" position="stacked">Mensaje</ion-label>
+        <ion-textarea type="text" [(ngModel)]="notification.message"></ion-textarea>
+      </ion-item>
+      <!--<ion-radio-group [(ngModel)]="notification.for">
+        <ion-item>
+          <ion-label>{{"USERS" | translate}}</ion-label>
+          <ion-radio value="users"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{"DRIVERS" | translate}}</ion-label>
+          <ion-radio value="drivers"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{"BOTH" | translate}}</ion-label>
+          <ion-radio value="all"></ion-radio>
+        </ion-item>
+      </ion-radio-group>-->
+    </ion-list>
+    <div class="ion-padding">
+      <ion-button expand="block" *ngIf="!isEdit" (click)="add()">Crear y enviar</ion-button>
+    </div>
+  </ion-card>
+</ion-content>

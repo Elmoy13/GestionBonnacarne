@@ -1,0 +1,127 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+    font-family: "Gothic";
+    src: url(../src/assets/fonts/GOTHIC.TTF);
+}
+
+.split-pane-visible >.split-pane-side {
+    min-width: 250px!important;
+    max-width: 250px!important;
+}
+
+table{
+    width: 100%;
+}
+thead{
+    background: #222;
+    color: #fff;
+}
+tr, td, th{
+    border: 1px solid #eee;
+    padding: 5px;
+    text-align: left;
+}
+
+ion-button{
+    --box-shadow:none;
+    font-family: "Gothic";
+}
+
+ion-input, ion-textarea, ion-select{
+    background: #fff !important;
+    margin-top: 1rem !important;
+    border: 2px solid #ddd !important;
+    border-radius: 4px;
+}
+
+ion-item {
+    --highlight-color-valid: transparent;
+    --highlight-color-invalid: transparent;
+    --highlight-color-focused: transparent;
+}
+input{
+    padding:8px !important;
+    font-family: "Gothic";
+}
+.active-link{
+    color: #DB2B36 !important;
+    --background: #fde3e3;
+
+    ion-icon{
+        color: #DB2B36 !important;
+    }
+}
+
+
+ion-content{
+    --background: #f9f9f9;
+}
+ion-card{
+    background: #fff !important;
+    font-family: "Gothic";
+}
+
+ion-menu {
+    ion-content{
+        --background: #fff;
+    }
+    .header-md:after{
+        background: none !important;
+    }
+}
+
+ion-toggle {
+    color:#B31019;
+    --background-checked: #6d0d12;;
+}
+
+h3{
+    color: #331212;
+    font-family: "Gothic";
+}
+
+ion-title{
+    font-family: "Gothic";
+}
+
+select{
+    font-family: "Gothic";
+}
+
+p{
+    font-family: "Gothic";
+}
+
+ion-badge{
+    font-family: "Gothic";
+}
+
+ion-label{
+    font-family: "Gothic";
+}

@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="secondary">Ordenes ({{orders.length}})</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="bkn">
+    <div class="reload">
+      <div>
+        <input type="date" [(ngModel)]="selectedDate" (change)="getAllOrders()">
+      </div>
+      <div>
+        <ion-button size="small" fill="clear" (click)="reset()">Reiniciar</ion-button>
+      </div>
+    </div>
+    <div>
+      <select [(ngModel)]="filter.orderStatus" (change)="sortByStatus()">
+        <option value="Ordenado">Ordenado</option>
+        <option value="Pagado">Pagado</option>
+        <!--<option value="ontheway">On the way</option>-->
+        <option value="Entregado">Entregado</option>
+        <option value="Cancelado">Cancelado</option>
+      </select>
+      &nbsp;&nbsp;
+    </div>
+  </div>
+  <p *ngIf="orders.length == 0 ">No se encontraron ordenes {{selectedDate}}</p>
+  <ion-list lines="none">
+    <ion-item *ngFor="let order of orders" (click)="view(order)">
+      <ion-card class="card">
+        <ion-grid>
+          <ion-card-header>
+            <ion-row>
+              <ion-col>
+                <ion-card-title>#{{order.createdAt}} - {{order.createdAt | date: 'dd/MM/yyyy h:mm a'}}</ion-card-title>
+              </ion-col>
+              <ion-col class="label_status">
+                <ion-badge *ngIf="order.orderStatus === 'Ordenado'" color="success">{{order.orderStatus}}</ion-badge>
+                <ion-badge *ngIf="order.orderStatus === 'Pagado'" color="medium">{{order.orderStatus}}</ion-badge>
+                <ion-badge *ngIf="order.orderStatus === 'Entregado'" color="success">{{order.orderStatus}}</ion-badge>
+                <ion-badge *ngIf="order.orderStatus === 'Cancelado'" color="danger">{{order.orderStatus}}</ion-badge>
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label class="client">
+              <p>Cliente: {{order.userName}}</p>
+            </ion-label>
+            <ion-label class="products">
+              <p>Productos:</p>
+            </ion-label>
+            <ion-row class="products-index">
+              <ion-col><strong>Nombre</strong></ion-col>
+              <ion-col><strong>Peso</strong></ion-col>
+              <ion-col><strong>Precio</strong></ion-col>
+              <ion-col><strong>Banda</strong></ion-col>
+              <ion-col><strong>Posicion</strong></ion-col>
+            </ion-row>
+            <ion-row class="products-details" *ngFor="let item of order.cart">
+              <ion-col>{{item.Descripcion}}</ion-col>
+              <ion-col>{{item.Kgs | number : '1.2-2'}} kg</ion-col>
+              <ion-col>$ {{item.Publico * item.Kgs | number : '1.2-2'}} MXN</ion-col>
+              <ion-col>[{{item.EjeX}}][{{item.EjeY}}]</ion-col>
+              <ion-col>{{item.Posicion}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <ion-label>
+                  <p><strong>Total:</strong> {{currency}} {{order.finalPrice | number : '1.2-2'}} MXN</p>
+                </ion-label>
+              </ion-col>
+              <ion-col size="3">
+                <ion-label>
+                  <p><strong>Peso final:</strong>{{order.weight | number : '1.2-2'}} Kg</p>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-grid>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+  <ion-label>
+    <p><strong>Total del dia:</strong> {{currency}} {{totalDay | number : '1.2-2'}} MXN</p>
+  </ion-label>
+</ion-content>

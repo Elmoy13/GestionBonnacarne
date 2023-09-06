@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div class="app-logo">
+    <img src="assets/images/logo.png"/>
+  </div>
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input type="text" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button expand="block" (click)="login()">Login</ion-button>
+  </div>
+</ion-content>

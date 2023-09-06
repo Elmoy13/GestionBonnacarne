@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="secondary">Usuarios <span *ngIf="users.length > 0">({{users.length}})</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p *ngIf="users.length == 0"></p>
+  <ion-list *ngIf="users.length > 0">
+    <ion-item *ngFor="let user of users">
+      <ion-label>
+        <h3>{{user.name}}</h3>
+        <p>{{user.email}}</p>
+        <p>Pedidos: {{user.paidOrdersCount}}</p>
+
+      </ion-label>
+      <ion-buttons slot="end">
+        <!--<ion-button (click)="call(user.mobile)"><ion-icon name="call-outline"></ion-icon></ion-button>-->
+        <ion-button routerLink="/orders/user/{{user.key}}"><ion-icon color="secondary" name="cart-outline"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>

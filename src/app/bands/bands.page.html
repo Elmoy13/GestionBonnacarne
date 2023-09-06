@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="secondary">Bandas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="createBand()" style="background-color: #fff !important; padding: 12px;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="stacked">X</ion-label>
+            <ion-input type="text" formControlName="x" [value]="x">{{this.x}}</ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="stacked">Y</ion-label>
+            <ion-input type="text" formControlName="y" [value]="y">{{this.y}}</ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item style="margin-top: 12px;" lines="none">
+            <ion-label>Inventario</ion-label>
+            <ion-select formControlName="product">
+              <ion-select-option *ngFor="let product of arrayAllProducts" value="{{product.Descripcion}}">{{product.Descripcion}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col style="display: flex; align-items: center; justify-content: center;">
+          <ion-button expand="block" type="submit" [disabled]="form.invalid">Añadir</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <div *ngIf="order.key != undefined">
+    <ion-list lines="none">
+      <ion-item *ngIf="order.address != undefined">
+        <ion-label>
+          <h3>Direccion</h3>
+          <p>{{order.address.address}}-{{order.address.pincode}} (Landmark: {{order.address.landmark}}</p>
+        </ion-label>
+        <ion-button slot="end" (click)="openMap()">Mapa</ion-button>
+      </ion-item>
+      <ion-item>
+        
+      </ion-item>
+     
+      <!--<ion-item>
+        <ion-label>
+          Driver
+        </ion-label>
+        <select slot="end" [(ngModel)]="order.driverId" (change)="updateDriver(order.key, order.driverId)">
+          <option *ngFor="let driver of drivers" value="{{driver.key}}">{{driver.name}}</option>
+        </select>
+      </ion-item>-->
+      <ion-item-divider>
+        <ion-label>Articulo</ion-label>
+      </ion-item-divider>
+      <ion-item *ngFor="let item of order.cart">
+        <ion-checkbox slot="start"></ion-checkbox>
+        <ion-label>
+          <h3>{{item.Descripcion}} </h3>
+          <p>{{item.Kgs | number : '1.2-2'}} kg</p>
+        </ion-label>
+        <ion-text slot="end">
+          {{currency}}{{item.total*item.Kgs | number : '1.2-2'}} MXN
+        </ion-text>
+      </ion-item>
+      <!--<ion-item>
+        <ion-label>
+          {{ 'TAX1' | translate }} - {{order.tax}} %
+        </ion-label>
+        <ion-text slot="end">
+          {{currency}} {{order.taxPrice}}
+        </ion-text>
+      </ion-item>-->
+      <!--<ion-item *ngIf="order.deliveryFee != 0">
+        <ion-label>
+          {{ 'DELIVERY_FEE' | translate }}
+        </ion-label>
+        <ion-text slot="end">
+          {{currency}} {{order.deliveryFee}}
+        </ion-text>
+      </ion-item>-->
+      
+      
+    </ion-list>
+  </div>
+  <ion-list>
+    <ion-list-header lines="inset">
+      <ion-label class="ion-text-bold">Informacion de la banda</ion-label>
+    </ion-list-header>
+    <ion-grid [class]="tableTheme">
+      <ion-row [class]="tableHeader">
+        <ion-col class="ion-text-bold"> Columna (X)</ion-col>
+        <ion-col class="ion-text-bold"> Fila (Y)</ion-col>
+        <ion-col class="ion-text-bold"> Posicion (Z)</ion-col>
+        <ion-col class="ion-text-bold" style="text-align: center !important;">Borrar</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let band of arrayBands; let i = index;">
+        <ion-col>{{ band?.x }}</ion-col>
+        <ion-col>{{ band?.y }}</ion-col>
+        <ion-col>{{ band?.product }}</ion-col>
+        <ion-col style="text-align: center;">
+          <ion-icon name="trash-outline" style="font-size: larger; color: #DB2B36;" (click)="presentAlertConfirm(i)"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>
