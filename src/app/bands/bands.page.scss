@@ -27,9 +27,58 @@
     --background: #b80303;
     color: white;
 }
-
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 .header-dark {
     background: #080808;
     --background: #080808;
     color: white;
 }
+.custom-card {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff; /* Cambia el color de fondo según tus preferencias */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave */
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .custom-card-header {
+    background-color: #333;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  }
+  
+  .custom-card-content {
+    padding: 20px;
+  color: #333;
+  }
+  .custom-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ajusta la altura según tus necesidades */
+  }
+  /* Agrega estos estilos en tu archivo .scss (o .css) */
+.product-image {
+    max-width: 100%; /* Para asegurarte de que la imagen no se desborde del contenedor */
+    height: auto; /* Mantener la proporción de aspecto de la imagen */
+    display: block; /* Alinea la imagen al centro del contenedor */
+    margin: 0 auto; /* Centra horizontalmente la imagen */
+    border: 2px solid #ddd; /* Borde de la imagen */
+    border-radius: 10px; /* Borde redondeado */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  
+  /* Puedes agregar más estilos según tus preferencias */
+  

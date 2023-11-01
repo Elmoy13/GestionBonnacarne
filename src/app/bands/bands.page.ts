@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DbService } from '../services/db.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { CommonService } from '../services/common.service';
-import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-bands',
@@ -16,29 +15,21 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class BandsPage implements OnInit {
 
-
+  positionTitle: string;
   arrayAllProducts: Array<any> = [];
-  // arrayProducts: Array<any> = [
-  //   {
-  //     detail: 'Chuleta de cerdo 1 kg'
-  //   },
-  //   {
-  //     detail: 'Tocino de cerdo 1 kg'
-  //   },
-  //   {
-  //     detail: 'Carne molida 1 kg'
-  //   }
-  // ];
+
 
   arrayBands: Array<any> = [];
 
   form: FormGroup;
-  x: any;
-  y: any;
   order: any = {};
   drivers: any = [];
   currency: any;
   role: any;
+  scannedData: any;
+  xValue: number | undefined; // Variable para almacenar el valor de x
+  yValue: number | undefined; // Variable para almacenar el valor de y
+  product: any = {};
   constructor(
     private formBuilder: FormBuilder,
     public alertController: AlertController,
@@ -50,105 +41,50 @@ export class BandsPage implements OnInit {
   private afdb: AngularFireDatabase,
   private route: ActivatedRoute,
   private common: CommonService) {
-    this.getAllProducts();
-    this.currency = environment.currency
+   
+    
   }
 
 
   ngOnInit() {
-    this.buildForm();
-    this.getDrivers();
-    this.x = this.route.snapshot.paramMap.get('x');
-    
-    this.y = this.route.snapshot.paramMap.get('y');
-    console.log(this.x);
-  }
-
-  ionViewDidEnter() {
-    this.order = this.db.getOrder();
-    console.log(this.order);
-    this.order.weight = 0;
-    this.order.cart.forEach((res:any) => {
-      this.order.weight = this.order.weight + parseFloat(res.Kgs);
-        });
-    this.role = localStorage.getItem('role');
-    console.log(this.role);
-  }
-
-  call(mobile) {
-    window.open('tel:' + mobile);
-  }
-
-  openMap() {
-    window.open('https://www.google.com/maps?saddr=Current+Location&daddr=' + this.order.address.lat + ',' + this.order.address.lng);
-  }
-
-  updateStatus(key, status) {
-    this.afdb.object('orders/' + key).update({
-      orderStatus: status
-    }).then(() => {
-      this.common.showToast("Updated");
-    }).catch((err) => {
-      this.common.showToast("Something went wrong");
-    })
-  }
-
-  updateDriver(key, driverId) {
-    this.afdb.object('orders/' + key).update({
-      driverId: driverId
-    }).then(() => {
-      this.common.showToast("Updated");
-    }).catch((err) => {
-      this.common.showToast("Something went wrong");
-    })
-  }
-
-
-  getDrivers() {
-
-    this.afdb.list('drivers').snapshotChanges().subscribe((data: any) => {
-      console.log(data);
-      let tmp = [];
-      data.forEach(user => {
-        if (user.payload.val().isApproved == true || user.payload.val().isApproved == "true") {
-          tmp.push({
-            key: user.key,
-            ...user.payload.val()
-          })
-        }
-      })
-      this.drivers = tmp;
-
-    });
-    console.log(this.drivers);
-  }
-
-  getAllProducts() {
-    this.productService.getAllProducts().subscribe(
-      (res) => {
-        res.data.forEach(element => {          
-          if(element.Estado === "Activo    ") this.arrayAllProducts.push(element);
-        });                
-        console.log(this.arrayAllProducts);
-      },
-      (err) => {
-        console.log(err);
+    this.positionTitle = this.route.snapshot.queryParamMap.get('position');
+    this.route.queryParams.subscribe((params) => {
+      if (params.scannedData) {
+        this.scannedData = JSON.parse(params.scannedData);
+        this.productService.getProductByCode(this.scannedData.Codigo)
+          .subscribe((data) => {
+            this.product = data.data;
+            console.log(data);
+            this.calculateTotalPrice();
+          });
+      
       }
-    );
-  }
-
-
-  buildForm(): void {
-    this.form = this.formBuilder.group({
-      x: ['', [Validators.required]],
-      y: ['', [Validators.required]],
-      product: ['', [Validators.required]]
+      this.processPositionTitle(this.positionTitle);
     });
   }
-
-
-  createBand() {
-    this.arrayBands.push(this.form.value);
+  
+  private processPositionTitle(title: string | undefined) {
+    console.log("Cadena title recibida:", title); // Verifica el contenido de la cadena title
+    if (title) {
+      const matches = title.match(/[A-Za-z]\((\d+)-(\d+)\)/);
+      console.log("Coincidencias:", matches); // Verifica si hubo coincidencias con la expresión regular
+      if (matches && matches.length === 3) {
+        this.xValue = parseInt(matches[1], 10);
+        this.yValue = parseInt(matches[2], 10);
+        console.log("la posicion de x es " + this.xValue);
+        console.log("la posicion de y es " + this.yValue);
+      }
+    }
+  }
+  
+  
+  calculateTotalPrice(): number {
+    if (this.product && this.scannedData) {
+      const precioUnitario = parseFloat(this.product.Publico);
+      const unidades = parseFloat(this.scannedData.Unidades);
+      return precioUnitario * unidades;
+    }
+    return 0; // Valor predeterminado si no se puede calcular el precio total
   }
 
 
@@ -186,6 +122,47 @@ export class BandsPage implements OnInit {
       duration: time
     });
     toast.present();
+  }
+
+  async sendBandaData() {
+    const data = {
+      IDBanda: this.positionTitle,
+      EjeX: this.xValue,
+      EjeY: this.yValue,
+      CodProd: this.scannedData.Codigo,
+      Kgs: this.scannedData.Unidades,
+      Precio: this.product.Publico,
+      Estatus: 1,
+    };
+  
+    try {
+      const location = 'Tlaquepaque'; // or 'Tlaquepaque' based on your logic
+  
+      this.productService.sendBandaData(data, location).subscribe(
+        () => {
+          // Show a success message
+          this.presentAlert('Éxito', 'Datos guardados exitosamente');
+        },
+        (error) => {
+          // Handle any errors here and show an error message
+          this.presentAlert('Error', 'No se pudo guardar los datos. Inténtalo de nuevo.');
+          console.error('Error sending data to the server:', error);
+        }
+      );
+    } catch (error) {
+      // Handle any errors here
+      console.error('Error sending data to the server:', error);
+    }
+  }
+  
+  async presentAlert(title: string, message: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+      buttons: ['OK']
+    });
+  
+    await alert.present();
   }
 
 }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API: 'https://2613-2806-103e-d-9e4c-d22-371e-9e2-1072.ngrok.io/api/'
+  API: 'http://201.159.34.30:9295/bonnacarne-api/public/api/'
 };
 
 /*

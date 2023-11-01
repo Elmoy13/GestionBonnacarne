@@ -15,4 +15,15 @@ export class ProductsService {
   getAllProducts(): Observable<any> {
     return this.http.get(this.URI + 'productos/all');
   }
+  getProductByCode(code: string): Observable<any> {
+    return this.http.get(this.URI + 'productos/' + code);
+  }
+
+  sendBandaData(data: any, location: string): Observable<any> {
+
+    // Create the HTTP request
+    return this.http.post(`${this.URI}bandas/ubic/store/${location}`, data);
+  }
+
+
 }

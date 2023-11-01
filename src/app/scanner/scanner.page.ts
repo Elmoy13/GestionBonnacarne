@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DbService } from '../services/db.service';
-
+import { NavigationExtras } from '@angular/router';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-scanner',
   templateUrl: './scanner.page.html',
@@ -15,6 +16,15 @@ export class ScannerPage implements OnInit {
   isOpen: boolean = false;
   button: any;
   positionTitle: string;
+  scannedData: any = {
+    Codigo: '',
+    Producto: '',
+    Lote: '',
+    FechaEmpaque: '',
+    FechaCaducidad: '',
+    Unidades: 0,
+  };
+  showManualForm: boolean = false;
   constructor(
     private DB: DbService,
     private router: Router,
@@ -28,36 +38,46 @@ export class ScannerPage implements OnInit {
 
   ionViewDidEnter() {
   }
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      // Los datos del formulario son válidos, puedes hacer lo que necesites con ellos.
+      console.log('Datos enviados manualmente:', this.scannedData);
+      // Agregar la posición como un parámetro en la URL
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          scannedData: JSON.stringify(this.scannedData),
+          position: this.positionTitle // Aquí agregamos la posición
+        }
+      };
 
-  view(order) {
-    this.isScanning = false;
-    this.isOpen = false;
-    this.DB.setOrder(order);
-    const positionParts = this.positionTitle.split(',');
-const x = parseInt(positionParts[0].substring(1)); // Extraer el número después de 'x'
-const y = parseInt(positionParts[1].substring(1)); // Extraer el número después de 'y'
-this.navigateToBands(x, y);
+      this.router.navigate(['/bands'], navigationExtras);
+    }
+  }
+  toggleManualForm() {
+    this.showManualForm = !this.showManualForm;
   }
   navigateToBands(x: number, y: number) {
-    this.router.navigate(['/bands', x, y]);
+    this.router.navigate(['/bands']);
   }
 
   redirectOrder(orderInfo: any) {
-    console.log('-----');
-    if (this.isScanning === false) {
-      const scanner = document.getElementById("scan");
-      scanner.click();
+    if (!this.isScanning) {
       this.isScanning = true;
       this.output = orderInfo;
       let infoScanned = JSON.parse(this.output);
-      if (infoScanned !== null) {
-        console.log(infoScanned.key);
-        this.db.object('orders/' + infoScanned.key).snapshotChanges().subscribe((data: any) => {
-          let order = { key: data.key, ...data.payload.val() }
-          this.view(order);
-        });
+      if (infoScanned) {
+        this.scannedData = infoScanned;
+        
+        // Agregar la posición como un parámetro en la URL
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            scannedData: JSON.stringify(this.scannedData),
+            position: this.positionTitle // Aquí agregamos la posición
+          }
+        };
+  
+        this.router.navigate(['/bands'], navigationExtras);
       }
-
     }
   }
 

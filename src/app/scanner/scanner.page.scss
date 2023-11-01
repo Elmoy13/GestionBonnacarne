@@ -7,3 +7,18 @@ div{
     text-align: center; 
     align-items: center;
 }
+
+  
+  /* Estilo para el formulario */
+  .manual-form {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+  }
+  
+  .manual-form.active {
+    opacity: 1;
+    height: auto;
+    margin: 10px 0;
+  }

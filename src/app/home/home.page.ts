@@ -29,18 +29,20 @@ export class HomePage implements OnDestroy{
     private navCtrl: NavController,
   ) {
     this.currency = environment.currency;
-    this.getAllOrders();
+   
     //console.log(this.matriz[1][1][9]);
   }
   navigateToScanner(position: string) {
     this.router.navigate(['/scanner', position]);
   }
   getCellPosition(x: number, y: number): string {
-    return `x${x},y${y}`;
+    const invertedX = this.rows - x + 1; // Invertir la coordenada x
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Abecedario
+  const letter = alphabet.charAt(y - 1); // Obtener la letra correspondiente
+  return `${letter}(${invertedX}-${y})`;
   }
-
   getRowNumbers(): number[] {
-    return Array(this.rows).fill(0).map((_, index) => index + 1);
+    return Array(this.rows).fill(0).map((_, index) => index + 1).reverse();
   }
 
   getColNumbers(): number[] {
@@ -69,38 +71,7 @@ export class HomePage implements OnDestroy{
     this.router.navigateByUrl('/view-order');
   }
 
-  getAllOrders() {
-    var date1 = new Date();
-    this.totalDay = 0;
-    //var date2 = new Date(date1.getFullYear(),date1.getMonth(),date1.getDay()+4,date1.getHours(),date1.getMinutes(),date1.getSeconds(),date1.getMilliseconds());
-    //console.log(date2);
 
-    var start = new Date(date1);
-    start.setHours(0, 0, 0, 0);
-    start.setDate(date1.getDate());
-
-
-    let startTime = start.getTime();
-    console.log(start.getTime());
-
-    this.db.list('orders/', ref => ref.orderByChild('createdAt').startAt(startTime)).snapshotChanges().subscribe((data: any) => {
-
-      let tmp = [];
-      data.forEach(order => {
-        tmp.push({ key: order.key, ...order.payload.val() })
-      })
-      this.allOrders = tmp;
-      this.allOrders.forEach((ele:any) => {
-        ele.weight = 0;
-        ele.cart.forEach((res:any) => {
-          ele.weight = ele.weight + parseFloat(res.Kgs);
-        });
-        this.totalDay = this.totalDay + ele.finalPrice;
-      });
-      this.orders = tmp.reverse();
-      console.log(this.orders);
-    });
-  }
 
   ngOnDestroy(){
     console.log("Destruyendo componente");
