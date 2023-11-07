@@ -6,6 +6,8 @@ import { ProductsService } from '../services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DbService } from '../services/db.service';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { LoadingController } from '@ionic/angular'; // Importa el LoadingController
+
 import { CommonService } from '../services/common.service';
 
 @Component({
@@ -40,7 +42,8 @@ export class BandsPage implements OnInit {
   private router: Router,
   private afdb: AngularFireDatabase,
   private route: ActivatedRoute,
-  private common: CommonService) {
+  private common: CommonService,
+  private loadingController: LoadingController,) {
    
     
   }
@@ -48,16 +51,33 @@ export class BandsPage implements OnInit {
 
   ngOnInit() {
     this.positionTitle = this.route.snapshot.queryParamMap.get('position');
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe(async (params) => {
       if (params.scannedData) {
+        // Muestra el loader antes de hacer la llamada al servicio
+        const loading = await this.loadingController.create({
+          message: 'Cargando...', // Puedes personalizar el mensaje
+        });
+        await loading.present();
+
         this.scannedData = JSON.parse(params.scannedData);
+
         this.productService.getProductByCode(this.scannedData.Codigo)
-          .subscribe((data) => {
-            this.product = data.data;
-            console.log(data);
-            this.calculateTotalPrice();
-          });
-      
+          .subscribe(
+            (data) => {
+              this.product = data.data;
+              console.log(data);
+              this.calculateTotalPrice();
+
+              // Oculta el loader después de recibir la respuesta del servicio
+              loading.dismiss();
+            },
+            (error) => {
+              // En caso de error, también debes ocultar el loader
+              loading.dismiss();
+
+              // Maneja el error
+            }
+          );
       }
       this.processPositionTitle(this.positionTitle);
     });

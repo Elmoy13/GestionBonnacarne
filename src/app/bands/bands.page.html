@@ -13,23 +13,22 @@
       <ion-card class="custom-card">
         <ion-card-header class="custom-card-header">
           {{ positionTitle }} <br>
-          {{ scannedData.Producto }}
+          {{ product?.Descripcion }}
         </ion-card-header>
         <ion-card-content class="custom-card-content">
-          <p><strong>Código:</strong> {{ scannedData.Codigo }}</p>
-          <p><strong>Lote:</strong> {{ scannedData.Lote }}</p>
-          <p><strong>Fecha de Empaque:</strong> {{ scannedData.FechaEmpaque }}</p>
-          <p><strong>Fecha de Caducidad:</strong> {{ scannedData.FechaCaducidad }}</p>
-          <p><strong>Unidades:</strong> {{ scannedData.Unidades }}</p> 
+          <p><strong>Código:</strong> {{ scannedData?.Codigo }}</p>
+          <p><strong>Lote:</strong> {{ scannedData?.Lote }}</p>
+          <p><strong>Fecha de Empaque:</strong> {{ scannedData?.FechaEmpaque }}</p>
+          <p><strong>Fecha de Caducidad:</strong> {{ scannedData?.FechaCaducidad }}</p>
+          <p><strong>Unidades:</strong> {{ scannedData?.Unidades }}</p> 
           <div *ngIf="product">
-            <p><strong>Medida:</strong> {{ product.Medida }}</p>
-            <p><strong>Precio:</strong> {{ product.Publico }}</p>
+            <p><strong>Medida:</strong> {{ product?.Medida }}</p>
+            <p><strong>Precio:</strong> {{ product?.Publico }}</p>
             <p><strong>Precio Total:</strong> {{ calculateTotalPrice() }}</p>
           </div>
-            <p><strong>X:</strong> {{ xValue }}</p>
-            <p><strong>Y:</strong> {{ yValue }}</p>
-            <img [src]="product.ImagenURL" alt="Imagen del producto" class="product-image">
-          
+          <p><strong>X:</strong> {{ xValue }}</p>
+          <p><strong>Y:</strong> {{ yValue }}</p>
+          <img [src]="product ? product.ImagenURL : ''" alt="Imagen del producto" class="product-image">
         </ion-card-content>
       </ion-card>
     </div>
