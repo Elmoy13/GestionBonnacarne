@@ -1,11 +1,27 @@
 {
   "hosting": {
-    "site":"bonnacarne-admin",
+    "site": "kiosco-prueba",
     "public": "www",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/bigben",
+        "function": "bigben",
+        "region": "us-central1",
+        "pinTag": true
+      },
+      {
+        "source" : "**",
+        "function" : "api"
+        }
     ]
   }
 }
