@@ -1,6 +1,7 @@
 export const environment = {
-  production: true,
+  production: false,
   adminEmail: 'admin@bonnacarne.com',
+  API: 'http://201.159.34.30:9295/bonnacarne-api/public/api/',
   superAdminEmail: 'sistemas@bonnacarne.com',
   currency: '$',
   firebase: {
