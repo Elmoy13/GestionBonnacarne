@@ -11,14 +11,12 @@ div{
   
   /* Estilo para el formulario */
   .manual-form {
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+    opacity: 0; /* Inicia con opacidad cero para que esté oculto inicialmente */
+    transform: translateY(-20px); /* Desplazamiento inicial hacia arriba */
+    transition: opacity 100.3s ease, transform 100.3s ease; /* Agrega una transición suave */
   }
   
   .manual-form.active {
-    opacity: 1;
-    height: auto;
-    margin: 10px 0;
+    opacity: 1; /* Hacer visible */
+    transform: translateY(0); /* Desplazamiento a la posición normal */
   }

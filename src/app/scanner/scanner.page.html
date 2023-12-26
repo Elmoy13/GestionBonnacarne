@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Escáner de códigos QR </ion-title>
+    <ion-title>Escáner de códigos QR</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,9 +18,9 @@
     </ion-button>
   </div>
 
-  <ion-button expand="full" (click)="toggleManualForm()" class="manual-button">
+  <ion-button expand="full" (click)="toggleManualForm()" color="primary" fill="solid" shape="round" size="default">
     Manual
-  </ion-button>
+</ion-button>
 
   <!-- Formulario manual con clases condicionales -->
   <form
@@ -30,26 +30,41 @@
     class="manual-form"
     [ngClass]="{ active: showManualForm }"
   >
-    <ion-item>
-      <ion-label position="floating">Código</ion-label>
-      <ion-input name="codigo" [(ngModel)]="scannedData.Codigo" required></ion-input>
+  <ion-item>
+    <ion-label position="floating">Código</ion-label>
+    <ion-input 
+      name="codigo" 
+      [(ngModel)]="scannedData.Codigo" 
+      type="text" 
+      required
+      (ionInput)="onSearchChange($event)"
+      autocomplete="on"  
+    ></ion-input>
+  </ion-item>
+  
+  <ion-list *ngIf="filteredProducts.length > 0">
+    <ion-item *ngFor="let item of filteredProducts" (click)="selectProduct(item)">
+      {{ item.CodProd }} - {{ item.Descripcion }}
     </ion-item>
+  </ion-list>
     <ion-item>
       <ion-label position="floating">Lote</ion-label>
       <ion-input name="lote" [(ngModel)]="scannedData.Lote" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Fecha de Empaque</ion-label>
-      <ion-input name="fechaEmpaque" [(ngModel)]="scannedData.FechaEmpaque" required></ion-input>
+      <ion-input name="fechaEmpaque" [(ngModel)]="scannedData.FechaEmpaque" type="date" required></ion-input>
     </ion-item>
+    
     <ion-item>
       <ion-label position="floating">Fecha de Caducidad</ion-label>
-      <ion-input name="fechaCaducidad" [(ngModel)]="scannedData.FechaCaducidad" required></ion-input>
+      <ion-input name="fechaCaducidad" [(ngModel)]="scannedData.FechaCaducidad" type="date" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Unidades</ion-label>
-      <ion-input name="unidades" [(ngModel)]="scannedData.Unidades" required></ion-input>
+      <ion-input name="unidades" [(ngModel)]="scannedData.Unidades" type="number" required></ion-input>
     </ion-item>
-    <ion-button expand="full" type="submit">Enviar </ion-button>
+    <br><br>
+    <ion-button expand="full" type="submit" color="primary" fill="solid" shape="round" size="default">Enviar </ion-button>
   </form>
 </ion-content>

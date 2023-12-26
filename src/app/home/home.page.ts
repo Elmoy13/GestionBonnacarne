@@ -39,7 +39,7 @@ export class HomePage implements OnDestroy{
     const invertedX = this.rows - x + 1; // Invertir la coordenada x
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Abecedario
   const letter = alphabet.charAt(y - 1); // Obtener la letra correspondiente
-  return `${letter}(${invertedX}-${y})`;
+  return `${letter}(${y}-${invertedX})`;
   }
   getRowNumbers(): number[] {
     return Array(this.rows).fill(0).map((_, index) => index + 1).reverse();

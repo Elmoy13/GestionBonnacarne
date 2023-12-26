@@ -13,7 +13,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -59,6 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     FirebaseX,
+    AndroidPermissions,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

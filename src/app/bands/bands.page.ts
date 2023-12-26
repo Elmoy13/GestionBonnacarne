@@ -145,35 +145,75 @@ export class BandsPage implements OnInit {
   }
 
   async sendBandaData() {
-    const data = {
-      IDBanda: this.positionTitle,
-      EjeX: this.xValue,
-      EjeY: this.yValue,
-      CodProd: this.scannedData.Codigo,
-      Kgs: this.scannedData.Unidades,
-      Precio: this.product.Publico,
-      Estatus: 1,
-    };
-  
-    try {
-      const location = 'Tlaquepaque'; // or 'Tlaquepaque' based on your logic
-  
-      this.productService.sendBandaData(data, location).subscribe(
-        () => {
-          // Show a success message
-          this.presentAlert('Éxito', 'Datos guardados exitosamente');
+    const confirmAlert = await this.alertController.create({
+      header: 'Confirmación',
+      message: '¿Los datos que se muestran son correctos?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancelado');
+          }
         },
-        (error) => {
-          // Handle any errors here and show an error message
-          this.presentAlert('Error', 'No se pudo guardar los datos. Inténtalo de nuevo.');
-          console.error('Error sending data to the server:', error);
+        {
+          text: 'Sí',
+          handler: () => {
+            // Usuario seleccionó Sí, mostrar loader y enviar datos
+            this.showLoader(); // Mostrar loader
+  
+            const data = {
+              IDBanda: this.positionTitle,
+              EjeX: this.xValue,
+              EjeY: this.yValue,
+              CodProd: this.scannedData.Codigo,
+              Kgs: this.scannedData.Unidades,
+              Precio: this.product.Publico,
+              Estatus: 1,
+            };
+  
+            try {
+              const location = 'Guadalajara'; // or 'Tlaquepaque' based on your logic
+  
+              this.productService.sendBandaData(data, location).subscribe(
+                () => {
+                  // Operación completada con éxito, ocultar loader y mostrar mensaje
+                  this.hideLoader();
+                  this.presentAlert('Éxito', 'Datos guardados exitosamente');
+                  this.router.navigate(['/home']);
+                },
+                (error) => {
+                  // Handle any errors here, ocultar loader y mostrar mensaje de error
+                  this.hideLoader();
+                  this.presentAlert('Error', 'No se pudo guardar los datos. Inténtalo de nuevo.');
+                  console.error('Error sending data to the server:', error);
+                }
+              );
+            } catch (error) {
+              // Handle any errors here, ocultar loader
+              this.hideLoader();
+              console.error('Error sending data to the server:', error);
+            }
+          }
         }
-      );
-    } catch (error) {
-      // Handle any errors here
-      console.error('Error sending data to the server:', error);
-    }
+      ]
+    });
+  
+    await confirmAlert.present();
   }
+  
+  async showLoader() {
+    const loading = await this.loadingController.create({
+      message: 'Enviando datos...', // Puedes personalizar el mensaje
+    });
+    await loading.present();
+  }
+  
+  async hideLoader() {
+    await this.loadingController.dismiss();
+  }
+  
+ 
   
   async presentAlert(title: string, message: string) {
     const alert = await this.alertController.create({
