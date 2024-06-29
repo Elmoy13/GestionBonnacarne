@@ -93,6 +93,8 @@ export class BandsPage implements OnInit {
         this.yValue = parseInt(matches[2], 10);
         console.log("la posicion de x es " + this.xValue);
         console.log("la posicion de y es " + this.yValue);
+        console.log("la posicion holoas de y es " + this.yValue);
+
       }
     }
   }
